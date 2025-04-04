@@ -1,38 +1,281 @@
+/* ===== Main Layout ===== */
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #EADDCA;
+  padding: 20px;
+}
+
+/* ===== Coffee Cup ===== */
+.coffee-cup {
+  position: relative;
+  width: 220px;
+  height: 300px;
+  background: #F5F5DC;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden; /* Essential for fill effect */
+  cursor: pointer;
+}
+
+.coffee-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #4B3621;
+  border-radius: 0 0 25px 25px;
+  transition: height 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.coffee-cup:hover .coffee-liquid {
+  height: calc(100%);
+}
+
+/* Coffee bubbles */
+.coffee-liquid::before,
+.coffee-liquid::after,
+.coffee-liquid span {
+  content: "";
+  position: absolute;
+  background: rgba(234, 221, 202, 0.3);
+  border-radius: 50%;
+  animation: bubble-rise 4s infinite ease-in;
+}
+
+.coffee-liquid::before {
+  width: 10px;
+  height: 10px;
+  left: 25%;
+  bottom: 15px;
+}
+
+.coffee-liquid::after {
+  width: 6px;
+  height: 6px;
+  left: 65%;
+  bottom: 30px;
+  animation-delay: 0.8s;
+}
+
+@keyframes bubble-rise {
+  0% { transform: translateY(0) scale(0.8); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateY(-180px) scale(1.2); opacity: 0; }
+}
+
+/* ===== Coffee Sleeve ===== */
+.coffee-sleeve {
+  position: absolute;
+  width: 100%;
+  height: 80px;
+  background: #7d9a68;
+  top: 100px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+/* Sleeve texture */
+.coffee-sleeve::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 15px,
+    rgba(255,255,255,0.1) 15px,
+    rgba(255,255,255,0.1) 20px
+  );
+}
+
+/* ===== Sleeve Text Effects ===== */
+.sleeve-char {
+  display: inline-block;
+  position: relative;
+  color: #EADDCA;
+  font-family: 'Georgia', serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 0 2px;
+  z-index: 3;
+}
+
+/* Letter fill effect */
+.sleeve-char::before {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  color: #C4A484;
+  overflow: hidden;
+  transition: height 0.4s ease-out;
+}
+
+.sleeve-char:hover::before {
+  height: 100%;
+}
+
+/* Space handling */
+.sleeve-char.space {
+  width: 0.4em;
+  pointer-events: none;
+}
+
+.sleeve-char.space::before {
+  display: none;
+}
+
+/* ===== Cup Details ===== */
+/* Top rim */
+.coffee-cup::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #F5F5DC;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+}
+
+/* Base coffee stain */
+.coffee-cup::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 20px;
+  background: #4B3621;
+  border-radius: 0 0 25px 25px;
+  z-index: 1;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+  .coffee-cup {
+    width: 180px;
+    height: 250px;
+  }
+  
+  .coffee-sleeve {
+    height: 65px;
+    margin-top: 50px;
+  }
+  
+  .sleeve-char {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== Click Prompt ===== */
+.click-prompt {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  animation: pulse 2s infinite;
+  cursor: pointer;
+  color: #6F4E37;
+  transition: color 0.5s ease;
+  z-index: 3;
+}
+
+.click-prompt.light-text {
+  color: #F5F5DC;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 0.7; transform: scale(0.98); }
+}
+
+/* ===== Hater Wall Page ===== */
+.hater-wall {
+  background: #F5F5DC;
+  width: 90%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(111, 78, 55, 0.2);
+  text-align: center;
+}
+
+.hater-wall h2 {
+  color: #6F4E37;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+}
+
+.hater-name {
+  font-size: 1.8rem;
+  color: #B22222;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-family: 'Georgia', serif;
+}
+
+/* ===== Hater Wall Button ===== */
+.hater-wall-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-family: 'Georgia', serif;
+  background: #6F4E37;
   color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.hater-wall-button:hover {
+  background: #4B3621;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ===== Back Button (For Hater Wall) ===== */
+.back-button {
+  margin-top: 1.5rem;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #6F4E37;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  background: #4B3621;
+  transform: translateX(-3px);
 }

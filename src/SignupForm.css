@@ -1,0 +1,150 @@
+/* Form Container */
+.signup-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: #F5F5DC;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(111, 78, 55, 0.2);
+    position: relative;
+  }
+  
+  /* Form Groups */
+  .form-group {
+    margin-bottom: 2rem; /* Increased from 1.5rem */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.8rem; /* Increased from 0.5rem */
+    color: #4B3621;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Input Fields */
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 14px; /* Slightly larger */
+    border: 2px solid #6F4E37;
+    border-radius: 8px; /* More rounded */
+    background: #FFFDF9; /* Lighter background */
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #4B3621;
+    box-shadow: 0 0 0 3px rgba(111, 78, 55, 0.2);
+  }
+  
+  /* Radio Buttons */
+  .radio-group {
+    margin-top: 2.2rem; /* More space above */
+  }
+  
+  .radio-options {
+    display: flex;
+    gap: 2rem; /* Wider gap between options */
+    margin-top: 1rem; /* More space below label */
+  }
+  
+  .radio-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* More space between radio and text */
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .radio-options input[type="radio"] {
+    transform: scale(1.2); /* Larger radio buttons */
+    accent-color: #6F4E37; /* Coffee-brown selection */
+  }
+  
+  /* Submit Button */
+  .submit-btn {
+    background: #6F4E37;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 2rem;
+    width: 100%;
+    letter-spacing: 0.5px;
+  }
+  
+  .submit-btn:hover {
+    background: #4B3621;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+  
+  /* Back Button */
+  .back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #6F4E37;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s;
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .back-button:hover {
+    background: #4B3621;
+    transform: translateX(-3px);
+  }
+
+  /* Rejection Message Styles */
+.rejection-message {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .rejection-message h2 {
+    color: #D32F2F;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .rejection-message p {
+    color: #6F4E37;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Success Message Styles */
+  .success-message {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .success-message h2 {
+    color: #388E3C;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .success-message p {
+    color: #6F4E37;
+    margin-bottom: 1rem;
+  }
