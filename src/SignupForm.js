@@ -12,36 +12,21 @@ function SignupForm({ onGoBack }) {
     roast: ''
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (formData.coffeeType === 'espresso') {
-      setRejected(true);
-      return;
-    }
-
-    try {
-      // Send form data to FormSubmit
-      await fetch("https://formsubmit.co/coffeeclubgithub@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      setSubmitted(true);
-    } catch (err) {
-      console.error("Form submit error:", err);
-    }
-  };
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleSubmit = (e) => {
+    if (formData.coffeeType === 'espresso') {
+      e.preventDefault();
+      setRejected(true);
+    } else {
+      // let the browser submit the form to FormSubmit
+      setSubmitted(true);
+    }
   };
 
   if (rejected) {
@@ -86,7 +71,17 @@ function SignupForm({ onGoBack }) {
       </button>
 
       <h2>Join Our Coffee Club</h2>
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form 
+        className="signup-form" 
+        action="https://formsubmit.co/87b44e0d86e76a6885eef347f450e705" 
+        method="POST"
+        onSubmit={handleSubmit}
+      >
+        {/* Hidden config fields */}
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="box" />
+        <input type="hidden" name="_next" value="https://yourdomain.com/thanks" />
+
         {/* Name Field */}
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
