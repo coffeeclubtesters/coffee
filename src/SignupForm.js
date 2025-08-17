@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './SignupForm.css';
 
 function SignupForm({ onGoBack }) {
-  const [submitted, setSubmitted] = useState(false);
   const [rejected, setRejected] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,10 +23,8 @@ function SignupForm({ onGoBack }) {
     if (formData.coffeeType === 'espresso') {
       e.preventDefault();
       setRejected(true);
-    } else {
-      // let the browser submit the form to FormSubmit
-      setSubmitted(true);
     }
+    // Otherwise, do nothing: browser will submit form via POST
   };
 
   if (rejected) {
@@ -41,23 +39,6 @@ function SignupForm({ onGoBack }) {
             onClick={() => setRejected(false)}
           >
             Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (submitted) {
-    return (
-      <div className="signup-container">
-        <div className="success-message">
-          <h2>Welcome to the Club!</h2>
-          <p>Your application has been brewed successfully.</p>
-          <button 
-            className="submit-btn"
-            onClick={onGoBack}
-          >
-            Back to Cup
           </button>
         </div>
       </div>
