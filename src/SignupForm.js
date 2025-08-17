@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './SignupForm.css';
 
 function SignupForm({ onGoBack }) {
+  const [submitted, setSubmitted] = useState(false);
   const [rejected, setRejected] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -19,12 +20,30 @@ function SignupForm({ onGoBack }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (formData.coffeeType === 'espresso') {
-      e.preventDefault();
       setRejected(true);
+      return;
     }
-    // Otherwise, do nothing: browser will submit form via POST
+
+    // Build FormData for FormSubmit
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => form.append(key, value));
+    form.append("_captcha", "false");
+    form.append("_template", "box");
+
+    try {
+      await fetch("https://formsubmit.co/87b44e0d86e76a6885eef347f450e705", {
+        method: "POST",
+        body: form,
+        cache: "no-store"
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Form submission failed:", err);
+    }
   };
 
   if (rejected) {
@@ -45,6 +64,23 @@ function SignupForm({ onGoBack }) {
     );
   }
 
+  if (submitted) {
+    return (
+      <div className="signup-container">
+        <div className="success-message">
+          <h2>Welcome to the Club!</h2>
+          <p>Your membership has been brewed successfully. ☕</p>
+          <button 
+            className="submit-btn"
+            onClick={onGoBack}
+          >
+            Back to Cup
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="signup-container">
       <button className="back-button" onClick={onGoBack}>
@@ -54,15 +90,9 @@ function SignupForm({ onGoBack }) {
       <h2>Join Our Coffee Club</h2>
       <form 
         className="signup-form" 
-        action="https://formsubmit.co/87b44e0d86e76a6885eef347f450e705" 
-        method="POST"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit} 
+        autoComplete="off"
       >
-        {/* Hidden config fields */}
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="box" />
-        <input type="hidden" name="_next" value="https://yourdomain.com/thanks" />
-
         {/* Name Field */}
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
@@ -124,9 +154,7 @@ function SignupForm({ onGoBack }) {
                 onChange={handleChange} 
                 required 
               />
-              <span className="roast-label light-roast">
-                Light Roast
-              </span>
+              <span className="roast-label light-roast">Light Roast</span>
             </label>
             <label>
               <input 
@@ -135,9 +163,7 @@ function SignupForm({ onGoBack }) {
                 value="medium"
                 onChange={handleChange} 
               />
-              <span className="roast-label medium-roast">
-                Medium Roast
-              </span>
+              <span className="roast-label medium-roast">Medium Roast</span>
             </label>
             <label>
               <input 
@@ -146,9 +172,7 @@ function SignupForm({ onGoBack }) {
                 value="dark"
                 onChange={handleChange} 
               />
-              <span className="roast-label dark-roast">
-                Dark Roast
-              </span>
+              <span className="roast-label dark-roast">Dark Roast</span>
             </label>
           </div>
         </div>
