@@ -12,13 +12,28 @@ function SignupForm({ onGoBack }) {
     roast: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.coffeeType === 'espresso') {
       setRejected(true);
-    } else {
-      // Handle successful submission
+      return;
+    }
+
+    try {
+      // Send form data to FormSubmit
+      await fetch("https://formsubmit.co/coffeeclubgithub@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
       setSubmitted(true);
+    } catch (err) {
+      console.error("Form submit error:", err);
     }
   };
 
@@ -115,21 +130,22 @@ function SignupForm({ onGoBack }) {
             <option value="latte">Latte</option>
             <option value="cappuccino">Cappuccino</option>
             <option value="americano">Americano</option>
-            <option value="americano">Pour Over</option>
-            <option value="americano">Drip</option>
-            <option value="americano">Cortado</option>
+            <option value="pour-over">Pour Over</option>
+            <option value="drip">Drip</option>
+            <option value="cortado">Cortado</option>
           </select>
         </div>
 
-         {/* Roast Preference */}
-         <div className="form-group radio-group">
+        {/* Roast Preference */}
+        <div className="form-group radio-group">
           <label>Coffee Roast Preference</label>
           <div className="radio-options roast-options">
             <label>
               <input 
                 type="radio" 
                 name="roast" 
-                value="light" 
+                value="light"
+                onChange={handleChange} 
                 required 
               />
               <span className="roast-label light-roast">
@@ -140,7 +156,8 @@ function SignupForm({ onGoBack }) {
               <input 
                 type="radio" 
                 name="roast" 
-                value="medium" 
+                value="medium"
+                onChange={handleChange} 
               />
               <span className="roast-label medium-roast">
                 Medium Roast
@@ -150,7 +167,8 @@ function SignupForm({ onGoBack }) {
               <input 
                 type="radio" 
                 name="roast" 
-                value="dark" 
+                value="dark"
+                onChange={handleChange} 
               />
               <span className="roast-label dark-roast">
                 Dark Roast
@@ -167,7 +185,8 @@ function SignupForm({ onGoBack }) {
               <input 
                 type="radio" 
                 name="grinder" 
-                value="yes" 
+                value="yes"
+                onChange={handleChange} 
                 required 
               /> 
               Yes
@@ -176,7 +195,8 @@ function SignupForm({ onGoBack }) {
               <input 
                 type="radio" 
                 name="grinder" 
-                value="no" 
+                value="no"
+                onChange={handleChange} 
               /> 
               No
             </label>
